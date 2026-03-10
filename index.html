@@ -56,6 +56,9 @@
            maxlength="10" 
            placeholder="Enter 10 digit number"
            required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <div id="password-strength"></div>
         <br><br>
         <button type="submit">Submit</button>
     </form>
@@ -68,6 +71,26 @@
                 this.setCustomValidity('');
             }
             this.reportValidity();
+        });
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (/[a-z]/.test(password)) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^a-zA-Z0-9]/.test(password)) score++;
+            const strengthDiv = document.getElementById('password-strength');
+            if (score <= 2) {
+                strengthDiv.textContent = 'Weak';
+                strengthDiv.style.color = 'red';
+            } else if (score <= 4) {
+                strengthDiv.textContent = 'Medium';
+                strengthDiv.style.color = 'orange';
+            } else {
+                strengthDiv.textContent = 'Strong';
+                strengthDiv.style.color = 'green';
+            }
         });
     </script>
 </body>
